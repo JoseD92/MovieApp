@@ -1,0 +1,143 @@
+﻿@model MovieApp.Models.Movie
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Movie</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<dt>
+    Genre
+</dt>
+<dd>
+    <table class="table">
+        <tr>
+            <th>Category</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.HaveCategories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <form action="/Movies/EditCat" method="post">
+                        <input type="hidden" name="ID" value="@Model.ID">
+                        <input type="hidden" name="action" value="DEL">
+                        <input type="hidden" name="target" value="@item.CategoryID">
+                        <input type="submit" value="-">
+                    </form>
+                </td>
+            </tr>
+        }
+            <tr>
+                <td>
+                    <form action="/Movies/EditCat" method="post">
+                        <input type="hidden" name="ID" value="@Model.ID">
+                        <input type="hidden" name="action" value="ADD">
+                        <select name="target">
+                            @foreach (var item in Model.NotMovieCat())
+                            {
+                                if (item != null)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <input type="submit" value="Add">
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+    </table>
+</dd>
+
+<dt>
+    @Html.DisplayNameFor(model => model.Leads)
+</dt>
+<dd>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Leads)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Actor.Name)
+                </td>
+                <td>
+                    <form action="/Movies/EditAct" method="post">
+                        <input type="hidden" name="ID" value="@Model.ID">
+                        <input type="hidden" name="action" value="DEL">
+                        <input type="hidden" name="target" value="@item.ActorID">
+                        <input type="submit" value="-">
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <form action="/Movies/EditAct" method="post">
+                    <input type="hidden" name="ID" value="@Model.ID">
+                    <input type="hidden" name="action" value="ADD">
+                    <select name="target">
+                        @foreach (var item in Model.NotMovieLead())
+                        {
+                            if (item != null)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" value="Add">
+                </form>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</dd>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

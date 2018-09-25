@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MovieApp.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Title Contains: @Html.TextBox("SearchString")
+        <input type="hidden" name="searchType" value="title">
+        <input type="submit" value="Filter" />
+    </p>
+}
+@using (Html.BeginForm())
+{
+    <p>
+        Category: @Html.TextBox("SearchString")
+        <input type="hidden" name="searchType" value="cat">
+        <input type="submit" value="Filter" />
+    </p>
+}
+@using (Html.BeginForm())
+{
+    <p>
+        Actor Name: @Html.TextBox("SearchString")
+        <input type="hidden" name="searchType" value="act">
+        <input type="submit" value="Filter" />
+    </p>
+}
+    <p>
+        <form action="/Movies/Index" method="post">
+            <input type="hidden" name="searchString" value="">
+            <input type="hidden" name="searchType" value="">
+            <input type="submit" value="Clear">
+        </form>
+    </p>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm })
+                </th>
+                <th>
+                    @Html.ActionLink("Release Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>
