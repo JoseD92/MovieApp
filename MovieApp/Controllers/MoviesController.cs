@@ -31,12 +31,16 @@ namespace MovieApp.Controllers
                     case "cat":
                         var cat = from m in db.HaveCategories
                                   select m;
-                        movies = movies.Where(s => cat.Where(c => c.MovieID == s.ID && c.Category.Name.Contains(searchString)).Any());
+                        movies = movies.Where(
+                            s => cat.Where(
+                                c => c.MovieID == s.ID && c.Category.Name.Contains(searchString)).Any());
                         break;
                     case "act":
                         var lead = from m in db.Leads
                                   select m;
-                        movies = movies.Where(s => lead.Where(l => l.MovieID == s.ID && l.Actor.Name.Contains(searchString)).Any());
+                        movies = movies.Where(
+                            s => lead.Where(
+                                l => l.MovieID == s.ID && l.Actor.Name.Contains(searchString)).Any());
                         break;
                 }
             }
@@ -108,6 +112,16 @@ namespace MovieApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.NotMovieCat = db.Database.SqlQuery<Category>(
+                "SELECT * FROM Category WHERE NOT EXISTS " +
+                "(SELECT * FROM HaveCategory WHERE " +
+                "Category.ID = CategoryID AND MovieID = {0})",
+                movie.ID);
+            ViewBag.NotMovieLead = db.Database.SqlQuery<Actor>(
+                "SELECT * FROM Actor WHERE NOT EXISTS " +
+                "(SELECT * FROM Lead WHERE " +
+                "Actor.ID = ActorID AND MovieID = {0})",
+                movie.ID);
             return View(movie);
         }
 
@@ -132,12 +146,18 @@ namespace MovieApp.Controllers
         {
             if (action== "DEL")
             {
-                db.Database.ExecuteSqlCommand("DELETE FROM HaveCategory WHERE MovieID={0} AND CategoryID={1}",ID,target);
+                db.Database.ExecuteSqlCommand(
+                    "DELETE FROM HaveCategory WHERE MovieID={0} AND CategoryID={1}",
+                    ID,
+                    target);
             }
             if (action == "ADD")
             {
                 System.Diagnostics.Debug.WriteLine("ADD "+ID.ToString()+" "+target.ToString());
-                db.Database.ExecuteSqlCommand("INSERT INTO HaveCategory (MovieID,CategoryID) VALUES ({0},{1})", ID, target);
+                db.Database.ExecuteSqlCommand(
+                    "INSERT INTO HaveCategory (MovieID,CategoryID) VALUES ({0},{1})",
+                    ID,
+                    target);
             }
             return RedirectToAction("Edit/"+ID.ToString());
         }
@@ -147,11 +167,17 @@ namespace MovieApp.Controllers
         {
             if (action == "DEL")
             {
-                db.Database.ExecuteSqlCommand("DELETE FROM Lead WHERE MovieID={0} AND ActorID={1}", ID, target);
+                db.Database.ExecuteSqlCommand(
+                    "DELETE FROM Lead WHERE MovieID={0} AND ActorID={1}",
+                    ID, 
+                    target);
             }
             if (action == "ADD")
             {
-                db.Database.ExecuteSqlCommand("INSERT INTO Lead (MovieID,ActorID) VALUES ({0},{1})", ID, target);
+                db.Database.ExecuteSqlCommand(
+                    "INSERT INTO Lead (MovieID,ActorID) VALUES ({0},{1})",
+                    ID,
+                    target);
             }
             return RedirectToAction("Edit/" + ID.ToString());
         }

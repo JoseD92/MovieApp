@@ -23,22 +23,5 @@ namespace MovieApp.Models
         public virtual ICollection<HaveCategory> HaveCategories { get; set; }
         public virtual ICollection<Lead> Leads { get; set; }
 
-        public DbRawSqlQuery<Category> NotMovieCat() {
-            MovieAppContext db = new MovieAppContext();
-            return db.Database.SqlQuery<Category>(
-                "SELECT * FROM Category WHERE NOT EXISTS " +
-                "(SELECT * FROM HaveCategory WHERE " +
-                "Category.ID = CategoryID AND MovieID = {0})",
-                ID);
-        }
-        public DbRawSqlQuery<Actor> NotMovieLead()
-        {
-            MovieAppContext db = new MovieAppContext();
-            return db.Database.SqlQuery<Actor>(
-                "SELECT * FROM Actor WHERE NOT EXISTS " +
-                "(SELECT * FROM Lead WHERE " +
-                "Actor.ID = ActorID AND MovieID = {0})",
-                ID);
-        }
     }
 }

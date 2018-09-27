@@ -71,7 +71,7 @@
                         <input type="hidden" name="ID" value="@Model.ID">
                         <input type="hidden" name="action" value="ADD">
                         <select name="target">
-                            @foreach (var item in Model.NotMovieCat())
+                            @foreach (var item in ViewBag.NotMovieCat)
                             {
                                 if (item != null)
                                 {
@@ -118,7 +118,7 @@
                     <input type="hidden" name="ID" value="@Model.ID">
                     <input type="hidden" name="action" value="ADD">
                     <select name="target">
-                        @foreach (var item in Model.NotMovieLead())
+                        @foreach (var item in ViewBag.NotMovieLead)
                         {
                             if (item != null)
                             {
