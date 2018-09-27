@@ -93,3 +93,13 @@ C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\EntityFramework.dll
 C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\EntityFramework.SqlServer.dll
 C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\EntityFramework.xml
 C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\EntityFramework.SqlServer.xml
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\CommonServiceLocator.dll
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\System.Configuration.ConfigurationManager.dll
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\CommonServiceLocator.pdb
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\Microsoft.Practices.ServiceLocation.dll
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\StructureMap.dll
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\WebActivator.dll
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\Microsoft.Practices.ServiceLocation.xml
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\StructureMap.pdb
+C:\Users\Jose\source\repos\MovieApp\MovieApp\bin\StructureMap.xml
